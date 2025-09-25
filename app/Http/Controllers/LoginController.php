@@ -23,27 +23,21 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        //
-        // Validate login input
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required',
         ]);
 
-        // Attempt to authenticate
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication passed...
-            $request->session()->regenerate();
+        $user = User::where('email', $request->email)->first();
 
-            return redirect()->route('dashboard')->with('success', 'Login successful!');
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return back()->with('failed', 'Invalid credentials.');
         }
 
-        // Authentication failed...
-        return back()
-            ->withErrors([
-                'email' => 'Invalid email or password.',
-            ])
-            ->withInput($request->only('email'));
+        // Store user ID in session
+        session(['custom_auth_user' => $user->id, 'user_type' => $user->name]);
+
+        return redirect()->route('dashboard')->with('success', 'Logged in successfully.');
     }
     public function showRegister()
     {
