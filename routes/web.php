@@ -2,14 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('admin.pages.dashboard.dashboard');
-});
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/vendors', function () {
-    return view('admin.pages.vendors.vendors');
-});
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/', [LoginController::class, 'login'])->name('login.attempt');
+Route::get('/register', [LoginController::class, 'showRegister'])->name('register.view');
+Route::post('/register', [LoginController::class, 'register'])->name('register.save');
 
-Route::get('/vendors/add', function () {
-    return view('admin.pages.vendors.add_vendor');
-});
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');

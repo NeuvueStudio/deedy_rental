@@ -23595,8 +23595,8 @@ ul {
     opacity: 1;
 }
 
-.account-bg-01 {
-    background-image: url(../img/authentication/login-bg.jpg);
+.account-bg-01 img{
+    background-image: url();
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -23605,7 +23605,6 @@ ul {
 }
 
 .account-bg-02 {
-    background-image: url(../img/authentication/register-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

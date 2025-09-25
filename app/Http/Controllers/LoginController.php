@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -11,31 +15,73 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('admin.pages.auth.login');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
         //
-    }
+        // Validate login input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
 
+        // Attempt to authenticate
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Authentication passed...
+            $request->session()->regenerate();
+
+            return redirect()->route('dashboard')->with('success', 'Login successful!');
+        }
+
+        // Authentication failed...
+        return back()
+            ->withErrors([
+                'email' => 'Invalid email or password.',
+            ])
+            ->withInput($request->only('email'));
+    }
+    public function showRegister()
+    {
+        return view('admin.pages.auth.register');
+    }
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function register(Request $request)
     {
-        //
+        // 1. Validate input
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8', // expects password_confirmation
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'errors' => $validator->errors(),
+                ],
+                422,
+            );
+        }
+
+        // 2. Create user
+        $user = User::create([
+            'name' => $request->full_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        // 3. Optionally generate token (for API)
+        // $token = $user->createToken('API Token')->plainTextToken;
+
+        return redirect()->back()->with('success', 'User registered successfully');
     }
 
     /**
