@@ -36,7 +36,7 @@
                  <li>
                      <ul>
                          <li>
-                             <a href="#"><i class="ti ti-user-up"></i><span>Vendors</span></a>
+                             <a href="/admin/vendors"><i class="ti ti-user-up"></i><span>Vendors</span></a>
                          </li>
                          <li>
                              <a href="#"><i class="ti ti-shopping-bag"></i><span>Products</span></a>
