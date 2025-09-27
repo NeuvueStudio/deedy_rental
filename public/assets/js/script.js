@@ -862,3 +862,269 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
 })();
+
+/*Vendor add and deatils*/
+
+document.addEventListener('DOMContentLoaded', function() {
+const showButtons = document.querySelectorAll('.show-details');
+
+showButtons.forEach(button => {
+button.addEventListener('click', function() {
+const vendorId = this.getAttribute('data-vendor-id');
+const vendorCode = this.getAttribute('data-vendor-code') || 'N/A';
+const companyName = this.getAttribute('data-company-name') || 'N/A';
+const ownerName = this.getAttribute('data-owner-name') || 'N/A';
+const phone = this.getAttribute('data-phone') || 'N/A';
+const contactsData = JSON.parse(this.getAttribute('data-contacts') || '[]');
+const godownsData = JSON.parse(this.getAttribute('data-godowns') || '[]');
+
+// Populate Basic Information
+document.getElementById('modalVendorCode').textContent = vendorCode;
+document.getElementById('modalCompanyName').textContent = companyName;
+document.getElementById('modalOwnerName').textContent = ownerName;
+document.getElementById('modalPhone').textContent = phone;
+
+// Update modal title
+document.getElementById('vendorDetailsModalLabel').textContent = `Vendor Details (Vendor Code: ${vendorCode})`;
+// Populate Alternate Contacts
+const contactsList = document.getElementById('contactsList');
+if (contactsData.length > 0) {
+contactsList.innerHTML = contactsData.map(contact => 
+`<div class="mb-2 p-2 border rounded"><strong>${contact.alternate_name || 'N/A'}</strong> - ${contact.alternate_no || 'N/A'}</div>`
+).join('');
+} else {
+contactsList.innerHTML = '<div class="text-muted">No alternate contacts available.</div>';
+}
+
+// Populate Godowns
+const godownsList = document.getElementById('godownsList');
+if (godownsData.length > 0) {
+godownsList.innerHTML = godownsData.map(godown => 
+`<div class="mb-2 p-2 border rounded"><strong>${godown.godown_address || 'N/A'}</strong> (${godown.contact_name || 'N/A'} - ${godown.godown_mobile_no || 'N/A'})</div>`
+).join('');
+} else {
+godownsList.innerHTML = '<div class="text-muted">No godowns available.</div>';
+}
+});
+});
+});
+
+function addAlternate() {
+const section = document.getElementById('alternate-section');
+const div = document.createElement('div');
+div.classList.add('row', 'mb-3', 'alternate-entry', 'align-items-end');
+div.innerHTML = `
+<div class="col-md-5">
+<input type="text" name="alternate_name[]" class="form-control" placeholder="Alternate Name" required>
+</div>
+<div class="col-md-5">
+<input type="tel" name="alternate_no[]" class="form-control" placeholder="Alternate No" required>
+</div>
+<div class="col-md-2 text-center">
+<button type="button" class="btn btn-danger" onclick="removeAlternate(this)">−</button>
+</div>`;
+section.appendChild(div);
+}
+
+function removeAlternate(button) {
+button.closest('.alternate-entry').remove();
+}
+
+function addGodown() {
+const section = document.getElementById('godown-section');
+const div = document.createElement('div');
+div.classList.add('row', 'mb-3', 'godown-entry', 'align-items-end');
+div.innerHTML = `
+<div class="col-md-5">
+<input type="text" name="godown_address[]" class="form-control" placeholder="Godown Address" required>
+</div>
+<div class="col-md-2">
+<input type="text" name="pincode[]" class="form-control" placeholder="Pincode" required>
+</div>
+<div class="col-md-2">
+<input type="text" name="contact_name[]" class="form-control" placeholder="Contact Name" required>
+</div>
+<div class="col-md-2">
+<input type="tel" name="godown_mobile_no[]" class="form-control" placeholder="Mobile No" required>
+</div>
+<div class="col-md-1 text-center">
+<button type="button" class="btn btn-danger" onclick="removeGodown(this)">−</button>
+</div>`;
+section.appendChild(div);
+}
+
+function removeGodown(button) {
+button.closest('.godown-entry').remove();
+}
+
+/*Product add and detail */
+
+// Image preview functionality
+document.getElementById('product_image').addEventListener('change', function(event) {
+const file = event.target.files[0];
+const preview = document.getElementById('imagePreview');
+if (file) {
+const reader = new FileReader();
+reader.onload = function(e) {
+preview.src = e.target.result;
+preview.style.display = 'block';
+};
+reader.readAsDataURL(file);
+} else {
+preview.style.display = 'none';
+preview.src = '';
+}
+});
+
+// Generate color options
+function generateColorOptions() {
+const colors = ['White', 'Black', 'Grey', 'Beige / Cream', 'Brown / Wood', 'Light Wood', 'Dark Wood', 'Blue', 'Green', 'Red', 'Yellow'];
+const colorMap = {
+'White': 'white',
+'Black': 'black',
+'Grey': 'grey',
+'Beige / Cream': 'beige',
+'Brown / Wood': 'brown',
+'Light Wood': '#D2B48C', // Light tan/wood color
+'Dark Wood': '#8B4513', // Saddle brown for dark wood
+'Blue': 'blue',
+'Green': 'green',
+'Red': 'red',
+'Yellow': 'yellow'
+};
+const container = document.getElementById('color-container');
+container.innerHTML = '';
+
+colors.forEach(function(color) {
+const colorOption = document.createElement('div');
+colorOption.className = 'color-option d-flex align-items-center';
+
+const checkbox = document.createElement('input');
+checkbox.type = 'checkbox';
+checkbox.name = 'colors[]';
+checkbox.value = color;
+const sanitizedColor = color.replace(/[^a-zA-Z0-9]/g, '_');
+checkbox.id = 'color_' + sanitizedColor;
+checkbox.style.display = 'none'; // Hidden, but native label association still works
+
+const label = document.createElement('label');
+label.htmlFor = 'color_' + sanitizedColor;
+label.className = 'color-label d-flex align-items-center';
+
+const circle = document.createElement('div');
+circle.className = 'color-circle me-2';
+circle.style.backgroundColor = colorMap[color];
+
+const span = document.createElement('span');
+span.textContent = color;
+
+label.appendChild(circle);
+label.appendChild(span);
+
+colorOption.appendChild(checkbox);
+colorOption.appendChild(label);
+container.appendChild(colorOption);
+
+// Add click handler DIRECTLY to the label for full box clickability and to avoid bubbling issues
+label.addEventListener('click', function(e) {
+e.preventDefault(); // Prevent any default behavior
+e.stopPropagation(); // Stop bubbling to parent (color-option) to avoid conflicts
+
+// Manually toggle the checkbox
+checkbox.checked = !checkbox.checked;
+
+// Update visual classes based on new state
+if (checkbox.checked) {
+label.classList.add('checked');
+circle.classList.add('checked');
+} else {
+label.classList.remove('checked');
+circle.classList.remove('checked');
+}
+});
+});
+}
+
+// Populate godown options
+function populateGodowns() {
+const select = document.getElementById('godown_id');
+const total = parseInt(document.getElementById('total_godown').value) || 0;
+select.innerHTML = '<option value="">Choose Godown</option>';
+for (let i = 1; i <= total; i++) {
+select.innerHTML += `<option value="${i}">Godown ${i}</option>`;
+}
+}
+
+// Vendor selection: update vendor code + godown (dummy data)
+document.getElementById('vendor_id').addEventListener('change', function() {
+const selectedOption = this.options[this.selectedIndex];
+document.getElementById('vendor_code').value = selectedOption.dataset.code || '';
+const totalGodowns = this.value ? Math.floor(Math.random() * 5) + 1 : 0;
+document.getElementById('total_godown').value = totalGodowns;
+populateGodowns(); // Update godown dropdown
+});
+
+// Category change -> dummy sub-categories
+document.getElementById('category_id').addEventListener('change', function() {
+const subCategorySelect = document.getElementById('sub_category_id');
+const materialSelect = document.getElementById('material_id');
+subCategorySelect.innerHTML = '<option value="">Choose Sub-Category</option>';
+materialSelect.innerHTML = '<option value="">Choose Material</option>';
+
+if (this.value === "1") {
+subCategorySelect.innerHTML += '<option value="1">Mobile</option><option value="2">Laptop</option>';
+} else if (this.value === "2") {
+subCategorySelect.innerHTML += '<option value="3">Chair</option><option value="4">Table</option>';
+}
+});
+
+// Sub-category change -> dummy materials
+document.getElementById('sub_category_id').addEventListener('change', function() {
+const materialSelect = document.getElementById('material_id');
+materialSelect.innerHTML = '<option value="">Choose Material</option>';
+
+if (this.value === "1") {
+materialSelect.innerHTML += '<option value="1">Plastic</option><option value="2">Metal</option>';
+} else if (this.value === "2") {
+materialSelect.innerHTML += '<option value="3">Aluminium</option>';
+} else if (this.value === "3") {
+materialSelect.innerHTML += '<option value="4">Wood</option>';
+} else if (this.value === "4") {
+materialSelect.innerHTML += '<option value="5">Steel</option>';
+}
+});
+
+// Initialize colors and godowns
+document.addEventListener('DOMContentLoaded', function() {
+generateColorOptions();
+populateGodowns(); // Initial population (will be empty until vendor selected)
+});
+
+$(document).ready(function(){
+    $('#vendor_id').on('change', function(){
+        var vendorId = $(this).val();
+        if(vendorId){
+            $.ajax({
+                url: '/get-godowns/' + vendorId,
+                type: 'GET',
+                success: function(response){
+                    // Reset dropdown
+                    $('#godown_id').empty().append('<option value="">Choose Godown</option>');
+
+                    // Godowns append
+                    $.each(response.godowns, function(key, godown){
+                        $('#godown_id').append(
+                            '<option value="'+ godown.id +'">'+ godown.godown_address +'</option>'
+                        );
+                    });
+
+                    // Total count set
+                    $('#total_godown').val(response.count);
+                }
+            });
+        } else {
+            $('#godown_id').empty().append('<option value="">Choose Godown</option>');
+            $('#total_godown').val(0);
+        }
+    });
+});

@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="gap-2 d-flex align-items-center flex-wrap">
-        <a href="/vendors" class="btn btn-outline-primary"><i class="ti ti-arrow-left me-1"></i>Back to Vendors</a>
+        <a href="/admin/vendors" class="btn btn-outline-primary"><i class="ti ti-arrow-left me-1"></i>Back to Vendors</a>
     </div>
 
     <!-- Card -->
@@ -133,55 +133,5 @@
     </div>
 </div>
 
-<!-- Scripts -->
-<script>
-function addAlternate() {
-    const section = document.getElementById('alternate-section');
-    const div = document.createElement('div');
-    div.classList.add('row', 'mb-3', 'alternate-entry', 'align-items-end');
-    div.innerHTML = `
-        <div class="col-md-5">
-            <input type="text" name="alternate_name[]" class="form-control" placeholder="Alternate Name" required>
-        </div>
-        <div class="col-md-5">
-            <input type="tel" name="alternate_no[]" class="form-control" placeholder="Alternate No" required>
-        </div>
-        <div class="col-md-2 text-center">
-            <button type="button" class="btn btn-danger" onclick="removeAlternate(this)">−</button>
-        </div>`;
-    section.appendChild(div);
-}
-
-function removeAlternate(button) {
-    button.closest('.alternate-entry').remove();
-}
-
-function addGodown() {
-    const section = document.getElementById('godown-section');
-    const div = document.createElement('div');
-    div.classList.add('row', 'mb-3', 'godown-entry', 'align-items-end');
-    div.innerHTML = `
-        <div class="col-md-5">
-            <input type="text" name="godown_address[]" class="form-control" placeholder="Godown Address" required>
-        </div>
-        <div class="col-md-2">
-            <input type="text" name="pincode[]" class="form-control" placeholder="Pincode" required>
-        </div>
-        <div class="col-md-2">
-            <input type="text" name="contact_name[]" class="form-control" placeholder="Contact Name" required>
-        </div>
-        <div class="col-md-2">
-            <input type="tel" name="godown_mobile_no[]" class="form-control" placeholder="Mobile No" required>
-        </div>
-        <div class="col-md-1 text-center">
-            <button type="button" class="btn btn-danger" onclick="removeGodown(this)">−</button>
-        </div>`;
-    section.appendChild(div);
-}
-
-function removeGodown(button) {
-    button.closest('.godown-entry').remove();
-}
-</script>
 
 @endsection

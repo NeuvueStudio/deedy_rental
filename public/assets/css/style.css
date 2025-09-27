@@ -28386,3 +28386,134 @@ th.fc-day-header {
 .remove-btn:hover {
     background: #bb2d3b;
 }
+.star-rating { 
+display: flex; 
+flex-direction: row-reverse; 
+justify-content: flex-end; 
+gap: 5px; /* Add gap between stars for better spacing */
+flex-wrap: wrap; /* Allow wrapping on small screens if needed */
+}
+.star-rating input { display: none; }
+.star-rating label { 
+color: #ddd; 
+font-size: 30px; 
+cursor: pointer; 
+transition: all 0.2s ease; 
+padding: 8px 12px; /* Padding for box feel */
+border-radius: 8px; /* Rounded corners like color boxes */
+border: 1px solid #ddd; /* Subtle border */
+background-color: white; /* White background for unselected */
+margin: 0; /* No extra margin */
+display: flex; /* Flex for centering if needed */
+align-items: center;
+justify-content: center;
+min-width: 50px; /* Minimum width for consistent box size */
+}
+.star-rating input:checked ~ label, 
+.star-rating label:hover,
+.star-rating label:hover ~ label { 
+color: #f5b301; 
+background-color: #fff3cd; /* Light yellow background for selected/hover, like a highlighted box */
+border-color: #f5b301; /* Matching border */
+}
+.star-rating input:checked ~ label {
+background-color: #f5b301; /* Gold background for the selected star */
+color: white; /* White star on gold bg for contrast */
+}
+
+.color-option {
+display: flex;
+align-items: center;
+margin: 0; /* No margin needed since container handles gap */
+}
+
+.color-label {
+cursor: pointer;
+user-select: none; /* Prevent text selection on click */
+display: flex;
+align-items: center;
+width: 100%; /* Full width for clickable area */
+padding: 8px 12px; /* Padding for the "box" feel */
+border-radius: 8px;
+border: 1px solid #ddd; /* Subtle border for unselected */
+transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; /* Smooth transition */
+margin: 0; /* Ensure no extra spacing */
+}
+
+.color-label.checked {
+background-color: #007bff !important; /* Blue background for selected */
+color: white; /* White text for contrast on blue bg */
+border-color: #0056b3; /* Darker blue border */
+}
+
+.color-label.checked .color-circle {
+border-color: white; /* White border on circle when selected for visibility */
+transform: scale(1.1); /* Optional: Slight scale for emphasis */
+}
+
+.color-circle {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+border: 2px solid #ccc;
+transition: border-color 0.2s ease, transform 0.1s ease;
+margin-right: 8px; /* Space between circle and text */
+flex-shrink: 0; /* Prevent shrinking */
+}
+
+.vendor-btn-cancel, .vendor-btn-submit { 
+padding: 8px 20px; border: none; border-radius: 5px; 
+}
+.vendor-btn-cancel { background: #ccc; }
+.vendor-btn-submit { background: #007bff; color: white; }
+#imagePreview {
+max-width: 200px;
+max-height: 200px;
+margin-top: 10px;
+border: 1px solid #ddd;
+border-radius: 5px;
+display: none;
+}
+
+/* Styling for dropdowns to prevent any black background issues */
+.form-control, select {
+background-color: white !important; /* Ensure white background */
+color: black !important; /* Ensure black text */
+}
+select option {
+background-color: white !important; /* White background for options */
+color: black !important; /* Black text for options */
+padding: 5px; /* Optional padding for better look */
+}
+select:focus option:hover {
+background-color: #e9ecef !important; /* Light gray hover for options */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.star-rating label {
+font-size: 24px; /* Smaller stars on mobile */
+padding: 6px 10px; /* Adjust padding */
+min-width: 40px;
+}
+.color-circle {
+width: 18px;
+height: 18px;
+}
+#imagePreview {
+max-width: 150px;
+max-height: 150px;
+}
+.color-label {
+padding: 6px 10px; /* Slightly smaller padding on mobile */
+}
+.star-rating {
+gap: 3px; /* Smaller gap on mobile */
+}
+}
+
+.form-control:focus,
+select:focus {
+border-color: #007bff;
+box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Bootstrap-like focus ring */
+}

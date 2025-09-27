@@ -21,6 +21,7 @@
         </div>
         @endif
         <div class="gap-2 d-flex align-items-center flex-wrap">
+        <a href="/admin/vendors/create" class="btn btn-outline-primary">+ Add New Vendor</a>
             <div class="dropdown">
                 <a href="javascript:void(0);" class="dropdown-toggle btn btn-outline-light px-2 shadow"
                     data-bs-toggle="dropdown"><i class="ti ti-package-export me-2"></i>Export</a>
@@ -139,51 +140,4 @@
 
 </div>
 <!-- End Content -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const showButtons = document.querySelectorAll('.show-details');
-    
-    showButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const vendorId = this.getAttribute('data-vendor-id');
-            const vendorCode = this.getAttribute('data-vendor-code') || 'N/A';
-            const companyName = this.getAttribute('data-company-name') || 'N/A';
-            const ownerName = this.getAttribute('data-owner-name') || 'N/A';
-            const phone = this.getAttribute('data-phone') || 'N/A';
-            const contactsData = JSON.parse(this.getAttribute('data-contacts') || '[]');
-            const godownsData = JSON.parse(this.getAttribute('data-godowns') || '[]');
-
-            // Populate Basic Information
-            document.getElementById('modalVendorCode').textContent = vendorCode;
-            document.getElementById('modalCompanyName').textContent = companyName;
-            document.getElementById('modalOwnerName').textContent = ownerName;
-            document.getElementById('modalPhone').textContent = phone;
-
-            // Update modal title
-            document.getElementById('vendorDetailsModalLabel').textContent = `Vendor Details (Vendor Code: ${vendorCode})`;
-            // Populate Alternate Contacts
-            const contactsList = document.getElementById('contactsList');
-            if (contactsData.length > 0) {
-                contactsList.innerHTML = contactsData.map(contact => 
-                    `<div class="mb-2 p-2 border rounded"><strong>${contact.alternate_name || 'N/A'}</strong> - ${contact.alternate_no || 'N/A'}</div>`
-                ).join('');
-            } else {
-                contactsList.innerHTML = '<div class="text-muted">No alternate contacts available.</div>';
-            }
-
-            // Populate Godowns
-            const godownsList = document.getElementById('godownsList');
-            if (godownsData.length > 0) {
-                godownsList.innerHTML = godownsData.map(godown => 
-                    `<div class="mb-2 p-2 border rounded"><strong>${godown.godown_address || 'N/A'}</strong> (${godown.contact_name || 'N/A'} - ${godown.godown_mobile_no || 'N/A'})</div>`
-                ).join('');
-            } else {
-                godownsList.innerHTML = '<div class="text-muted">No godowns available.</div>';
-            }
-        });
-    });
-});
-</script>
-
 @endsection

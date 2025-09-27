@@ -93,7 +93,7 @@ class VendorController extends Controller
     public function show(string $id)
     {
         $vendor = Vendor::with(['alternateContacts', 'godowns'])->findOrFail($id);
-    return response()->json($vendor);
+        return response()->json($vendor);
     }
 
     /**
@@ -175,5 +175,15 @@ class VendorController extends Controller
         });
 
         return redirect()->back()->with('success', 'Vendor deleted successfully!');
+    }
+    public function getGodowns($vendor_id)
+    {
+        $godowns = Godown::where('vendor_id', $vendor_id)->get();
+        $count = $godowns->count();
+
+        return response()->json([
+            'godowns' => $godowns,
+            'count' => $count
+        ]);
     }
 }
