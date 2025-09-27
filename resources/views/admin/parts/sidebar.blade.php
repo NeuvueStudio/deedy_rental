@@ -43,7 +43,7 @@
                          </li>
                         
                          <li>
-                             <a href="deals.html"><i class="ti ti-menu-2"></i><span>Categories</span></a>
+                             <a href="/admin/categories"><i class="ti ti-menu-2"></i><span>Categories</span></a>
                          </li>
                      </ul>
                  </li>
