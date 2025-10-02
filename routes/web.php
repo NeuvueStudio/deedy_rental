@@ -7,6 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContentController;
+
+use App\Models\Content;
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/', [LoginController::class, 'login'])->name('login.attempt');
@@ -34,3 +37,13 @@ Route::post('/admin/category/create', [CategoryController::class, 'store'])->nam
 Route::get('/admin/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
 Route::put('/admin/category/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+
+/* contents */
+
+Route::get('/contents', [ContentController::class, 'index'])->name('content.index');
+Route::get('/content/create', [ContentController::class, 'createBanner'])->name('content.create_banner');
+Route::post('/content/create', [ContentController::class, 'store'])->name('content.store');
+Route::get('/content/{id}/edit', [ContentController::class, 'edit'])->name('content.edit');
+Route::put('/content/{id}', [ContentController::class, 'update'])->name('content.update');
+Route::delete('/content/{id}', [ContentController::class, 'delete'])->name('content.destroy');
