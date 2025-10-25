@@ -14,6 +14,7 @@
         content="Advanced CRM template, customer relationship management, business CRM, sales optimization, customer support software, CRM integration, customizable CRM, business tools, enterprise CRM solutions">
     <meta name="author" content="Dreams Technologies">
     <meta name="robots" content="index, follow">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="/assets/img/favicon.png">
@@ -42,6 +43,8 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" id="app-style">
     <link rel="stylesheet" href="/assets/css/dropzone.min.css" id="app-style">
+
+    @yield('styles')
 </head>
 
 <body>
@@ -98,7 +101,30 @@
             }
         });
     </script>
+    <script>
+        // Disable auto-discovery so Dropzone doesn't attach automatically
+        Dropzone.autoDiscover = false;
 
+        // Create a Dropzone instance for a specific element
+        const myDropzone = new Dropzone("#my-dropzone", {
+            url: "#",
+            autoProcessQueue: false, // DO NOT auto-upload
+            maxFilesize: 5, // Maximum file size in MB
+            acceptedFiles: "image/*", // Only images
+            addRemoveLinks: true, // Show "Remove file" link
+            dictDefaultMessage: "Drag & drop images here or click to upload",
+            init: function() {
+                this.on("success", (file, response) => {
+                    console.log("File uploaded:", file.name);
+                });
+                this.on("error", (file, errorMessage) => {
+                    console.error("Upload error:", errorMessage);
+                });
+            }
+        });
+    </script>
+
+    @yield('scripts')
 </body>
 
 </html>
