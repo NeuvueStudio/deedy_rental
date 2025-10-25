@@ -3,7 +3,7 @@ Author       : Dreamstechnologies
 Template Name: CRMS - Bootstrap Admin Template
 */
 
-(function() {
+(function () {
     "use strict";
 
     // Variables declarations
@@ -12,7 +12,7 @@ Template Name: CRMS - Bootstrap Admin Template
     $overlay.insertBefore('.main-wrapper');
 
     // Toggle Mobile Menu
-    $(document).on('click', '#mobile_btn', function(e) {
+    $(document).on('click', '#mobile_btn', function (e) {
         e.preventDefault();
         $wrapper.toggleClass('slide-nav');
         $overlay.toggleClass('opened');
@@ -20,7 +20,7 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Close sidebar on close button click
-    $(document).on('click', '.sidebar-close, .sidebar-overlay', function() {
+    $(document).on('click', '.sidebar-close, .sidebar-overlay', function () {
         $wrapper.removeClass('slide-nav');
         $overlay.removeClass('opened');
         $('html').removeClass('menu-opened');
@@ -30,7 +30,7 @@ Template Name: CRMS - Bootstrap Admin Template
     function initSidebarMenu() {
         const $menuLinks = $('.sidebar-menu a');
 
-        $menuLinks.on('click', function(e) {
+        $menuLinks.on('click', function (e) {
             const $link = $(this);
             const $submenu = $link.next('ul');
 
@@ -61,7 +61,7 @@ Template Name: CRMS - Bootstrap Admin Template
     initSidebarMenu();
 
     // Mouse Over
-    $(document).on('mouseover', function(e) {
+    $(document).on('mouseover', function (e) {
         e.stopPropagation();
         if ($('body').hasClass('mini-sidebar') && $('#toggle_btn').is(':visible')) {
             var targ = $(e.target).closest('.sidebar, .header-left').length;
@@ -77,9 +77,9 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Star Filled
-    $(document).ready(function() {
-        setTimeout(function() {
-            $(".rating-select").on('click', function() {
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".rating-select").on('click', function () {
                 $(this).toggleClass("filled");
             });
         }, 100);
@@ -118,7 +118,7 @@ Template Name: CRMS - Bootstrap Admin Template
     if ($('#collapse-header').length > 0) {
         const collapseHeader = document.getElementById('collapse-header');
         if (collapseHeader) {
-            collapseHeader.addEventListener('click', function() {
+            collapseHeader.addEventListener('click', function () {
                 this.classList.toggle('active');
                 document.body.classList.toggle('header-collapse');
             });
@@ -126,7 +126,7 @@ Template Name: CRMS - Bootstrap Admin Template
     }
 
     // Toggle Button
-    $(document).on('click', '#toggle_btn, #toggle_btn2', function() {
+    $(document).on('click', '#toggle_btn, #toggle_btn2', function () {
         const $body = $('body');
         const $html = $('html');
         const isMini = $body.hasClass('mini-sidebar');
@@ -137,14 +137,14 @@ Template Name: CRMS - Bootstrap Admin Template
             $body.removeClass('mini-sidebar');
             $(this).addClass('active');
             localStorage.setItem('screenModeNightTokenState', 'night');
-            setTimeout(function() {
+            setTimeout(function () {
                 $(".header-left").addClass("active");
             }, 100);
         } else {
             $body.addClass('mini-sidebar');
             $(this).removeClass('active');
             localStorage.removeItem('screenModeNightTokenState');
-            setTimeout(function() {
+            setTimeout(function () {
                 $(".header-left").removeClass("active");
             }, 100);
         }
@@ -153,7 +153,7 @@ Template Name: CRMS - Bootstrap Admin Template
         if (isFullWidth) {
             $body.addClass('full-width').removeClass('mini-sidebar');
             $('.sidebar-overlay').addClass('opened');
-            $(document).on('click', '.sidebar-close', function() {
+            $(document).on('click', '.sidebar-close', function () {
                 $('body').removeClass('full-width');
             });
         } else {
@@ -164,7 +164,7 @@ Template Name: CRMS - Bootstrap Admin Template
         if (isHidden) {
             $body.toggleClass('hidden-layout');
             $body.removeClass('mini-sidebar');
-            $(document).on('click', '.sidebar-close', function() {
+            $(document).on('click', '.sidebar-close', function () {
                 $('body').removeClass('full-width');
             });
         }
@@ -339,7 +339,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
     // Select2
     if (jQuery().select2) {
-        $('[data-toggle="select2"]').each(function() {
+        $('[data-toggle="select2"]').each(function () {
             const $el = $(this);
             const options = {};
 
@@ -369,13 +369,13 @@ Template Name: CRMS - Bootstrap Admin Template
                     url: $el.attr('data-ajax--url'),
                     dataType: 'json',
                     delay: 250,
-                    data: function(params) {
+                    data: function (params) {
                         return {
                             q: params.term, // search term
                             page: params.page || 1
                         };
                     },
-                    processResults: function(data, params) {
+                    processResults: function (data, params) {
                         params.page = params.page || 1;
                         return {
                             results: data.items || [],
@@ -406,12 +406,12 @@ Template Name: CRMS - Bootstrap Admin Template
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
     // Toasts
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const toastPlacement = document.getElementById('toastPlacement');
         const placementSelect = document.getElementById('selectToastPlacement');
         if (toastPlacement && placementSelect) {
             const originalClass = toastPlacement.className;
-            placementSelect.addEventListener('change', function() {
+            placementSelect.addEventListener('change', function () {
                 toastPlacement.className = `${originalClass} ${this.value}`.trim();
             });
         }
@@ -456,7 +456,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
     // Toggle Password
     if ($('.toggle-password').length > 0) {
-        $(document).on('click', '.toggle-password', function() {
+        $(document).on('click', '.toggle-password', function () {
             const $icon = $(this).find('i');
             const $input = $(this).closest('.input-group').find('.pass-input');
             if ($input.attr('type') === 'password') {
@@ -523,22 +523,22 @@ Template Name: CRMS - Bootstrap Admin Template
     }
 
     // Select Table Checkbox
-    $('#select-all').on('click', function() {
+    $('#select-all').on('click', function () {
         const isChecked = this.checked;
         $('.form-check.form-check-md :checkbox').prop('checked', isChecked);
     });
 
-    $('#select-all-2').on('click', function() {
+    $('#select-all-2').on('click', function () {
         $('.form-check.form-check-md :checkbox').prop('checked', this.checked);
     });
 
-    $('#select-all-3').on('click', function() {
+    $('#select-all-3').on('click', function () {
         $('.form-check.form-check-md :checkbox').prop('checked', this.checked);
     });
 
     // Full Screen
     if ($('.btnFullscreen').length) {
-        const toggleFullscreen = function() {
+        const toggleFullscreen = function () {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
             } else {
@@ -551,7 +551,7 @@ Template Name: CRMS - Bootstrap Admin Template
     }
 
     // Aprrearence Settings 
-    $('.theme-image').on('click', function() {
+    $('.theme-image').on('click', function () {
         $('.theme-image').removeClass('active');
         $(this).addClass('active');
     });
@@ -580,7 +580,7 @@ Template Name: CRMS - Bootstrap Admin Template
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
-        }, function(start, end) {
+        }, function (start, end) {
             $('.daterangepick span').html(`${start.format('D MMM YY')} - ${end.format('D MMM YY')}`);
         });
 
@@ -598,11 +598,11 @@ Template Name: CRMS - Bootstrap Admin Template
     }
 
     // Otp Verfication  
-    $('.digit-group input').each(function() {
+    $('.digit-group input').each(function () {
         const $input = $(this);
         $input.attr('maxlength', 1);
 
-        $input.on('keyup', function(e) {
+        $input.on('keyup', function (e) {
             const $this = $(this);
             const $parent = $this.closest('.digit-group');
             const key = e.keyCode;
@@ -624,7 +624,7 @@ Template Name: CRMS - Bootstrap Admin Template
                 }
             }
         });
-        $input.on('keyup', function() {
+        $input.on('keyup', function () {
             $(this).toggleClass('active', this.value !== '');
         });
     });
@@ -657,7 +657,7 @@ Template Name: CRMS - Bootstrap Admin Template
     }
 
     // Add new invoice input on '+' click
-    $(document).on('click', '.add-invoices', function(e) {
+    $(document).on('click', '.add-invoices', function (e) {
         e.preventDefault();
 
         const newInvoice = `
@@ -678,7 +678,7 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Add new invoice input on '+' click
-    $(document).on('click', '.add-invoices-two', function(e) {
+    $(document).on('click', '.add-invoices-two', function (e) {
         e.preventDefault();
 
         const newInvoice = `
@@ -721,9 +721,9 @@ Template Name: CRMS - Bootstrap Admin Template
         // Insert before the last row (the add button row)
         $('.invoices-list-two tr:last').after(newInvoice);
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('.select');
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.select').select2({
                     minimumResultsForSearch: -1,
                     width: '100%'
@@ -733,7 +733,7 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Add new invoice input on '+' click
-    $(document).on('click', '.add-invoices-3', function(e) {
+    $(document).on('click', '.add-invoices-3', function (e) {
         e.preventDefault();
 
         const newInvoice = `
@@ -776,9 +776,9 @@ Template Name: CRMS - Bootstrap Admin Template
         // Insert before the last row (the add button row)
         $('.invoices-list-3 tr:last').after(newInvoice);
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('.select');
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.select').select2({
                     minimumResultsForSearch: -1,
                     width: '100%'
@@ -788,29 +788,29 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Remove Invoices input on trash icon click
-    $(document).on('click', '.remove-invoices', function(e) {
+    $(document).on('click', '.remove-invoices', function (e) {
         e.preventDefault();
         $(this).closest('.invoices-list-item').remove();
     });
 
     // Theme Color
-    $('.themecolorset').on('click', function() {
+    $('.themecolorset').on('click', function () {
         $('.themecolorset').removeClass('active');
         $(this).addClass('active');
     });
 
     // Add Comment
     if ($('.add-comment').length > 0) {
-        $(".add-comment").on("click", function() {
+        $(".add-comment").on("click", function () {
             $(this).closest('.notes-editor').find('.note-edit-wrap').slideToggle();
         });
-        $(".add-cancel").on("click", function() {
+        $(".add-cancel").on("click", function () {
             $(this).closest(".note-edit-wrap").slideUp();
         });
     }
 
     // Contact Wizard
-    $(document).on('click', '.add-info-fieldset .wizard-next-btn', function() {
+    $(document).on('click', '.add-info-fieldset .wizard-next-btn', function () {
         const $fieldset = $(this).closest('fieldset');
         const $nextFieldset = $fieldset.next();
         const $progressBar = $('.progress-bar-wizard');
@@ -823,11 +823,11 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Add Sign
-    $(document).on('click', '.trash-sign', function() {
+    $(document).on('click', '.trash-sign', function () {
         $(this).closest('.sign-cont').remove();
         return false;
     });
-    $(document).on('click', '.add-sign', function(e) {
+    $(document).on('click', '.add-sign', function (e) {
         e.preventDefault();
 
         const signcontent = '<div class="row sign-cont">' +
@@ -852,7 +852,7 @@ Template Name: CRMS - Bootstrap Admin Template
     });
 
     // Delete Reason
-    $('#deleteReason').on('select2:select', function(e) {
+    $('#deleteReason').on('select2:select', function (e) {
         const value = e.params.data.id;
         if (value === 'others') {
             $('#otherReasonBox').slideDown();
@@ -865,55 +865,55 @@ Template Name: CRMS - Bootstrap Admin Template
 
 /*Vendor add and deatils*/
 
-document.addEventListener('DOMContentLoaded', function() {
-const showButtons = document.querySelectorAll('.show-details');
+document.addEventListener('DOMContentLoaded', function () {
+    const showButtons = document.querySelectorAll('.show-details');
 
-showButtons.forEach(button => {
-button.addEventListener('click', function() {
-const vendorId = this.getAttribute('data-vendor-id');
-const vendorCode = this.getAttribute('data-vendor-code') || 'N/A';
-const companyName = this.getAttribute('data-company-name') || 'N/A';
-const ownerName = this.getAttribute('data-owner-name') || 'N/A';
-const phone = this.getAttribute('data-phone') || 'N/A';
-const contactsData = JSON.parse(this.getAttribute('data-contacts') || '[]');
-const godownsData = JSON.parse(this.getAttribute('data-godowns') || '[]');
+    showButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const vendorId = this.getAttribute('data-vendor-id');
+            const vendorCode = this.getAttribute('data-vendor-code') || 'N/A';
+            const companyName = this.getAttribute('data-company-name') || 'N/A';
+            const ownerName = this.getAttribute('data-owner-name') || 'N/A';
+            const phone = this.getAttribute('data-phone') || 'N/A';
+            const contactsData = JSON.parse(this.getAttribute('data-contacts') || '[]');
+            const godownsData = JSON.parse(this.getAttribute('data-godowns') || '[]');
 
-// Populate Basic Information
-document.getElementById('modalVendorCode').textContent = vendorCode;
-document.getElementById('modalCompanyName').textContent = companyName;
-document.getElementById('modalOwnerName').textContent = ownerName;
-document.getElementById('modalPhone').textContent = phone;
+            // Populate Basic Information
+            document.getElementById('modalVendorCode').textContent = vendorCode;
+            document.getElementById('modalCompanyName').textContent = companyName;
+            document.getElementById('modalOwnerName').textContent = ownerName;
+            document.getElementById('modalPhone').textContent = phone;
 
-// Update modal title
-document.getElementById('vendorDetailsModalLabel').textContent = `Vendor Details (Vendor Code: ${vendorCode})`;
-// Populate Alternate Contacts
-const contactsList = document.getElementById('contactsList');
-if (contactsData.length > 0) {
-contactsList.innerHTML = contactsData.map(contact => 
-`<div class="mb-2 p-2 border rounded"><strong>${contact.alternate_name || 'N/A'}</strong> - ${contact.alternate_no || 'N/A'}</div>`
-).join('');
-} else {
-contactsList.innerHTML = '<div class="text-muted">No alternate contacts available.</div>';
-}
+            // Update modal title
+            document.getElementById('vendorDetailsModalLabel').textContent = `Vendor Details (Vendor Code: ${vendorCode})`;
+            // Populate Alternate Contacts
+            const contactsList = document.getElementById('contactsList');
+            if (contactsData.length > 0) {
+                contactsList.innerHTML = contactsData.map(contact =>
+                    `<div class="mb-2 p-2 border rounded"><strong>${contact.alternate_name || 'N/A'}</strong> - ${contact.alternate_no || 'N/A'}</div>`
+                ).join('');
+            } else {
+                contactsList.innerHTML = '<div class="text-muted">No alternate contacts available.</div>';
+            }
 
-// Populate Godowns
-const godownsList = document.getElementById('godownsList');
-if (godownsData.length > 0) {
-godownsList.innerHTML = godownsData.map(godown => 
-`<div class="mb-2 p-2 border rounded"><strong>${godown.godown_address || 'N/A'}</strong> (${godown.contact_name || 'N/A'} - ${godown.godown_mobile_no || 'N/A'})</div>`
-).join('');
-} else {
-godownsList.innerHTML = '<div class="text-muted">No godowns available.</div>';
-}
-});
-});
+            // Populate Godowns
+            const godownsList = document.getElementById('godownsList');
+            if (godownsData.length > 0) {
+                godownsList.innerHTML = godownsData.map(godown =>
+                    `<div class="mb-2 p-2 border rounded"><strong>${godown.godown_address || 'N/A'}</strong> (${godown.contact_name || 'N/A'} - ${godown.godown_mobile_no || 'N/A'})</div>`
+                ).join('');
+            } else {
+                godownsList.innerHTML = '<div class="text-muted">No godowns available.</div>';
+            }
+        });
+    });
 });
 
 function addAlternate() {
-const section = document.getElementById('alternate-section');
-const div = document.createElement('div');
-div.classList.add('row', 'mb-3', 'alternate-entry', 'align-items-end');
-div.innerHTML = `
+    const section = document.getElementById('alternate-section');
+    const div = document.createElement('div');
+    div.classList.add('row', 'mb-3', 'alternate-entry', 'align-items-end');
+    div.innerHTML = `
 <div class="col-md-5">
 <input type="text" name="alternate_name[]" class="form-control" placeholder="Alternate Name" required>
 </div>
@@ -923,18 +923,18 @@ div.innerHTML = `
 <div class="col-md-2 text-center">
 <button type="button" class="btn btn-danger" onclick="removeAlternate(this)">−</button>
 </div>`;
-section.appendChild(div);
+    section.appendChild(div);
 }
 
 function removeAlternate(button) {
-button.closest('.alternate-entry').remove();
+    button.closest('.alternate-entry').remove();
 }
 
 function addGodown() {
-const section = document.getElementById('godown-section');
-const div = document.createElement('div');
-div.classList.add('row', 'mb-3', 'godown-entry', 'align-items-end');
-div.innerHTML = `
+    const section = document.getElementById('godown-section');
+    const div = document.createElement('div');
+    div.classList.add('row', 'mb-3', 'godown-entry', 'align-items-end');
+    div.innerHTML = `
 <div class="col-md-5">
 <input type="text" name="godown_address[]" class="form-control" placeholder="Godown Address" required>
 </div>
@@ -950,171 +950,35 @@ div.innerHTML = `
 <div class="col-md-1 text-center">
 <button type="button" class="btn btn-danger" onclick="removeGodown(this)">−</button>
 </div>`;
-section.appendChild(div);
+    section.appendChild(div);
 }
 
 function removeGodown(button) {
-button.closest('.godown-entry').remove();
+    button.closest('.godown-entry').remove();
 }
 
-/*Product add and detail */
 
-// Image preview functionality
-document.getElementById('product_image').addEventListener('change', function(event) {
-const file = event.target.files[0];
-const preview = document.getElementById('imagePreview');
-if (file) {
-const reader = new FileReader();
-reader.onload = function(e) {
-preview.src = e.target.result;
-preview.style.display = 'block';
-};
-reader.readAsDataURL(file);
-} else {
-preview.style.display = 'none';
-preview.src = '';
-}
-});
 
-// Generate color options
-function generateColorOptions() {
-const colors = ['White', 'Black', 'Grey', 'Beige / Cream', 'Brown / Wood', 'Light Wood', 'Dark Wood', 'Blue', 'Green', 'Red', 'Yellow'];
-const colorMap = {
-'White': 'white',
-'Black': 'black',
-'Grey': 'grey',
-'Beige / Cream': 'beige',
-'Brown / Wood': 'brown',
-'Light Wood': '#D2B48C', // Light tan/wood color
-'Dark Wood': '#8B4513', // Saddle brown for dark wood
-'Blue': 'blue',
-'Green': 'green',
-'Red': 'red',
-'Yellow': 'yellow'
-};
-const container = document.getElementById('color-container');
-container.innerHTML = '';
 
-colors.forEach(function(color) {
-const colorOption = document.createElement('div');
-colorOption.className = 'color-option d-flex align-items-center';
 
-const checkbox = document.createElement('input');
-checkbox.type = 'checkbox';
-checkbox.name = 'colors[]';
-checkbox.value = color;
-const sanitizedColor = color.replace(/[^a-zA-Z0-9]/g, '_');
-checkbox.id = 'color_' + sanitizedColor;
-checkbox.style.display = 'none'; // Hidden, but native label association still works
 
-const label = document.createElement('label');
-label.htmlFor = 'color_' + sanitizedColor;
-label.className = 'color-label d-flex align-items-center';
 
-const circle = document.createElement('div');
-circle.className = 'color-circle me-2';
-circle.style.backgroundColor = colorMap[color];
 
-const span = document.createElement('span');
-span.textContent = color;
-
-label.appendChild(circle);
-label.appendChild(span);
-
-colorOption.appendChild(checkbox);
-colorOption.appendChild(label);
-container.appendChild(colorOption);
-
-// Add click handler DIRECTLY to the label for full box clickability and to avoid bubbling issues
-label.addEventListener('click', function(e) {
-e.preventDefault(); // Prevent any default behavior
-e.stopPropagation(); // Stop bubbling to parent (color-option) to avoid conflicts
-
-// Manually toggle the checkbox
-checkbox.checked = !checkbox.checked;
-
-// Update visual classes based on new state
-if (checkbox.checked) {
-label.classList.add('checked');
-circle.classList.add('checked');
-} else {
-label.classList.remove('checked');
-circle.classList.remove('checked');
-}
-});
-});
-}
-
-// Populate godown options
-function populateGodowns() {
-const select = document.getElementById('godown_id');
-const total = parseInt(document.getElementById('total_godown').value) || 0;
-select.innerHTML = '<option value="">Choose Godown</option>';
-for (let i = 1; i <= total; i++) {
-select.innerHTML += `<option value="${i}">Godown ${i}</option>`;
-}
-}
-
-// Vendor selection: update vendor code + godown (dummy data)
-document.getElementById('vendor_id').addEventListener('change', function() {
-const selectedOption = this.options[this.selectedIndex];
-document.getElementById('vendor_code').value = selectedOption.dataset.code || '';
-const totalGodowns = this.value ? Math.floor(Math.random() * 5) + 1 : 0;
-document.getElementById('total_godown').value = totalGodowns;
-populateGodowns(); // Update godown dropdown
-});
-
-// Category change -> dummy sub-categories
-document.getElementById('category_id').addEventListener('change', function() {
-const subCategorySelect = document.getElementById('sub_category_id');
-const materialSelect = document.getElementById('material_id');
-subCategorySelect.innerHTML = '<option value="">Choose Sub-Category</option>';
-materialSelect.innerHTML = '<option value="">Choose Material</option>';
-
-if (this.value === "1") {
-subCategorySelect.innerHTML += '<option value="1">Mobile</option><option value="2">Laptop</option>';
-} else if (this.value === "2") {
-subCategorySelect.innerHTML += '<option value="3">Chair</option><option value="4">Table</option>';
-}
-});
-
-// Sub-category change -> dummy materials
-document.getElementById('sub_category_id').addEventListener('change', function() {
-const materialSelect = document.getElementById('material_id');
-materialSelect.innerHTML = '<option value="">Choose Material</option>';
-
-if (this.value === "1") {
-materialSelect.innerHTML += '<option value="1">Plastic</option><option value="2">Metal</option>';
-} else if (this.value === "2") {
-materialSelect.innerHTML += '<option value="3">Aluminium</option>';
-} else if (this.value === "3") {
-materialSelect.innerHTML += '<option value="4">Wood</option>';
-} else if (this.value === "4") {
-materialSelect.innerHTML += '<option value="5">Steel</option>';
-}
-});
-
-// Initialize colors and godowns
-document.addEventListener('DOMContentLoaded', function() {
-generateColorOptions();
-populateGodowns(); // Initial population (will be empty until vendor selected)
-});
-
-$(document).ready(function(){
-    $('#vendor_id').on('change', function(){
+$(document).ready(function () {
+    $('#vendor_id').on('change', function () {
         var vendorId = $(this).val();
-        if(vendorId){
+        if (vendorId) {
             $.ajax({
                 url: '/get-godowns/' + vendorId,
                 type: 'GET',
-                success: function(response){
+                success: function (response) {
                     // Reset dropdown
                     $('#godown_id').empty().append('<option value="">Choose Godown</option>');
 
                     // Godowns append
-                    $.each(response.godowns, function(key, godown){
+                    $.each(response.godowns, function (key, godown) {
                         $('#godown_id').append(
-                            '<option value="'+ godown.id +'">'+ godown.godown_address +'</option>'
+                            '<option value="' + godown.id + '">' + godown.godown_address + '</option>'
                         );
                     });
 

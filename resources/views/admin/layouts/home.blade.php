@@ -38,10 +38,10 @@
 
     <!-- Daterangepicker CSS -->
     <link rel="stylesheet" href="/assets/plugins/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
     <!-- Main CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" id="app-style">
-
+    <link rel="stylesheet" href="/assets/css/dropzone.min.css" id="app-style">
 </head>
 
 <body>
@@ -78,9 +78,9 @@
     <script src="/assets/plugins/apexchart/chart-data.js" type="text/javascript"></script>
 
     <!-- Custom Json Js -->
-    <script src="/assets/json/deals-project.js" type="text/javascript"></script>
-  <script src="assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
-
+    {{-- <script src="/assets/json/deals-project.js" type="text/javascript"></script> --}}
+    <script src="/assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+    <script src="/assets/js/dropzone.min.js" type="text/javascript"></script>
     <!-- Main JS -->
     <script src="/assets/js/script.js" type="text/javascript"></script>
     <script>
@@ -98,6 +98,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>
