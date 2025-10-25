@@ -8,7 +8,15 @@ use App\Models\Godown;
 use App\Models\Product;
 
 class ProductController extends Controller
-{
+{   
+    // Show Products List
+    public function index()
+    {
+        $products = Product::with(['vendor', 'godown'])->paginate(10);
+        
+        return view('admin.pages.products.products', compact('products'));
+    }
+
     // Show Add Product Page
     public function create()
     {

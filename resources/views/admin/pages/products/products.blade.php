@@ -1,0 +1,145 @@
+@extends('admin.layouts.home')
+@section('content')
+<!-- Start Content -->
+<div class="content pb-0">
+
+    <!-- Page Header -->
+    <div class="d-flex align-items-center justify-content-between gap-2 mb-4 flex-wrap">
+        <div>
+            <h4 class="mb-1">Products<span class="badge badge-soft-primary ms-2">{{ $products->total() }}</span></h4>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Products</li>
+                </ol>
+            </nav>
+        </div>
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        <div class="gap-2 d-flex align-items-center flex-wrap">
+        <a href="{{ route('admin.products.add') }}" class="btn btn-outline-primary">+ Add New Product</a>
+            <div class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle btn btn-outline-light px-2 shadow"
+                    data-bs-toggle="dropdown"><i class="ti ti-package-export me-2"></i>Export</a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="dropdown-item"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Header -->
+
+    <!-- card start -->
+    <div class="card border-0 rounded-0">
+        <div class="card-header d-flex align-items-center justify-content-between gap-2 flex-wrap">
+            <div class="input-icon input-icon-start position-relative">
+                <span class="input-icon-addon text-dark"><i class="ti ti-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search products..." id="searchInput">
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Vendors List -->
+            <div class="table-responsive table-nowrap">
+                <table class="table table-nowrap data" id="data">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>Rent Per Day</th>
+                            <th>Vendor</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($products as $product)
+                        <tr>
+                            <td>{{ $product->id }}</td>
+                            <td><img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="50"></td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->rent_per_day }}</td>
+                            <td>{{ $product->vendor->company_name }}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm show-details" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#vendorDetailsModal"
+                                        data-vendor-id="{{ $product->vendor->id }}"
+                                        data-vendor-code="{{ $product->vendor->vendor_code }}"
+                                        data-company-name="{{ $product->vendor->company_name }}"
+                                        data-owner-name="{{ $product->vendor->owner_name }}"
+                                        data-phone="{{ $product->vendor->contact_no }}"
+                                        data-contacts='@json($product->vendor->alternateContacts)'
+                                        data-godowns='@json($product->vendor->godowns)'>
+                                    Show Details
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- card end -->
+
+    <!-- Vendor Details Modal -->
+    <div class="modal fade" id="vendorDetailsModal" tabindex="-1" aria-labelledby="vendorDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vendorDetailsModalLabel">Vendor Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Basic Vendor Information -->
+                    <div id="basicInfoSection" class="mb-4">
+                        <h6>Basic Information</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Vendor ID:</strong> <span id="modalVendorCode"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Company Name:</strong> <span id="modalCompanyName"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Owner Name:</strong> <span id="modalOwnerName"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Phone:</strong> <span id="modalPhone"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alternate Contacts Section -->
+                    <div id="alternateContactsSection" class="mb-4">
+                        <h6>Alternate Contacts</h6>
+                        <div id="contactsList">No alternate contacts available.</div>
+                    </div>
+
+                    <!-- Godowns Section -->
+                    <div id="godownsSection">
+                        <h6>Godowns</h6>
+                        <div id="godownsList">No godowns available.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- End Content -->
+@endsection

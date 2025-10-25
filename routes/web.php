@@ -25,6 +25,7 @@ Route::get('/admin/vendors/{id}', [VendorController::class, 'show'])->name('vend
 
 /*Product Pages*/
 
+Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
 Route::get('/get-godowns/{vendor_id}', [VendorController::class, 'getGodowns']);
 Route::get('/admin/product/add', [ProductController::class, 'create'])->name('admin.products.add');
 Route::post('/admin/products/store', [ProductController::class, 'store'])->name('admin.products.store');
